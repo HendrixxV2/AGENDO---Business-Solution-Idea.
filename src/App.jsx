@@ -534,11 +534,20 @@ function downloadCsv(scenarios, ltv24, assumptions) {
 }
 
 function App() {
+  const [theme, setTheme] = useState(
+    () => (localStorage.getItem('agendo-theme') === 'dark' ? 'dark' : 'light'),
+  )
   const [investment, setInvestment] = useState(CASE.baseInvestment)
   const [price, setPrice] = useState(CASE.monthlyPrice)
   const [grossMargin, setGrossMargin] = useState(CASE.grossMargin)
   const [churn, setChurn] = useState(CASE.monthlyChurn)
   const [annualShare, setAnnualShare] = useState(0)
+
+  function toggleTheme() {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark'
+    localStorage.setItem('agendo-theme', nextTheme)
+    setTheme(nextTheme)
+  }
 
   const current = useMemo(
     () => calculateScenario(investment, { price, grossMargin, churn }),
@@ -622,7 +631,7 @@ function App() {
     history30Economics.blendedRatio >= 2.4 ? 'Escalar con límites' : 'No triplicar todavía'
 
   return (
-    <main>
+    <main data-theme={theme}>
       <header className="topbar">
         <a className="brand" href="#inicio" aria-label="Agendo, ir al inicio">
           <span className="brand-mark">A</span>
@@ -633,6 +642,16 @@ function App() {
           <a href="#tablero"><span>02</span> Tablero <b>+10</b></a>
           <a href="#simulador"><span>03</span> Simulador <b>+15 / +5</b></a>
         </nav>
+        <button
+          className="theme-toggle"
+          type="button"
+          aria-label={`Cambiar a tema ${theme === 'dark' ? 'claro' : 'oscuro'}`}
+          aria-pressed={theme === 'dark'}
+          onClick={toggleTheme}
+        >
+          <span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
+          {theme === 'dark' ? 'Claro' : 'Oscuro'}
+        </button>
         <span className="live-status"><i /> CASO B · ACTIVO</span>
       </header>
 

@@ -1,0 +1,153 @@
+{
+  "assumptions": [
+    {
+      "id": "case-b",
+      "name": "Agendo Cyber — Caso B",
+      "currency": "USD",
+      "monthlyPrice": 25,
+      "annualPrice": 240,
+      "grossMargin": 0.78,
+      "trialConversion": 0.14,
+      "monthlyChurn": 0.06,
+      "annualRenewalRate": 0.7,
+      "annualPeriodMonths": 12,
+      "annualPlanShareReference": 0.1,
+      "annualPlanShareDefault": 0,
+      "organicCustomersPerMonth": 50,
+      "initialActiveCustomers": 1150,
+      "startingCash": 60000,
+      "cashFloor": 10000,
+      "fixedMonthlyCosts": 14000,
+      "salespersonMonthlySalary": 1200,
+      "trialsPerSalesperson": 500,
+      "commissionPerPaidCustomer": 20,
+      "baseMonthlyInvestment": 10000,
+      "projectionHorizonMonths": 24,
+      "ltvCacTarget": 2.4,
+      "trialDurationDays": 14
+    }
+  ],
+  "acquisitionChannels": [
+    {
+      "id": "meta",
+      "name": "Meta",
+      "period": "Septiembre",
+      "investment": 6500,
+      "clicks": 9750,
+      "trials": 433,
+      "trialToPaidConversion": 0.14
+    },
+    {
+      "id": "google",
+      "name": "Google",
+      "period": "Septiembre",
+      "investment": 3500,
+      "clicks": 1480,
+      "trials": 67,
+      "trialToPaidConversion": 0.14
+    }
+  ],
+  "historicalScenarios": [
+    {
+      "id": "spend-0",
+      "investment": 0,
+      "trials": 0
+    },
+    {
+      "id": "spend-5000",
+      "investment": 5000,
+      "trials": 290
+    },
+    {
+      "id": "spend-10000",
+      "investment": 10000,
+      "trials": 500
+    },
+    {
+      "id": "spend-15000",
+      "investment": 15000,
+      "trials": 650
+    },
+    {
+      "id": "spend-20000",
+      "investment": 20000,
+      "trials": 760
+    },
+    {
+      "id": "spend-30000",
+      "investment": 30000,
+      "trials": 900
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "base",
+      "name": "01 · Base histórico",
+      "note": "Inversión actual; 20 USD por trial.",
+      "investment": 10000,
+      "trials": 500,
+      "paidCustomers": 70,
+      "organicCustomers": 50,
+      "salespeople": 1,
+      "acquisitionCost": 12600,
+      "paidCAC": 180,
+      "blendedCAC": 105
+    },
+    {
+      "id": "valeria",
+      "name": "02 · Proyección de Valeria",
+      "note": "Asume 20 USD por trial al escalar.",
+      "investment": 30000,
+      "trials": 1500,
+      "paidCustomers": 210,
+      "organicCustomers": 50,
+      "salespeople": 3,
+      "acquisitionCost": 37800,
+      "paidCAC": 180,
+      "blendedCAC": 145.38
+    },
+    {
+      "id": "history-30",
+      "name": "03 · Escala histórica",
+      "note": "La curva observada entrega 900 trials.",
+      "investment": 30000,
+      "trials": 900,
+      "paidCustomers": 126,
+      "organicCustomers": 50,
+      "salespeople": 2,
+      "acquisitionCost": 34920,
+      "paidCAC": 277.14,
+      "blendedCAC": 198.41
+    }
+  ],
+  "cohorts": [
+    {
+      "id": "monthly",
+      "name": "Mensual",
+      "billingFrequencyMonths": 1,
+      "price": 25,
+      "grossMargin": 0.78,
+      "monthlyChurn": 0.06,
+      "acquisitionCostSource": "paid"
+    },
+    {
+      "id": "annual",
+      "name": "Anual prepago",
+      "billingFrequencyMonths": 12,
+      "price": 240,
+      "grossMargin": 0.78,
+      "renewalRate": 0.7,
+      "renewalMonth": 13,
+      "acquisitionCostSource": "paid"
+    },
+    {
+      "id": "organic",
+      "name": "Orgánico",
+      "billingFrequencyMonths": 1,
+      "price": 25,
+      "grossMargin": 0.78,
+      "monthlyChurn": 0.06,
+      "acquisitionCost": 0
+    }
+  ]
+}
