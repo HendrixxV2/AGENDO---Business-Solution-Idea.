@@ -149,5 +149,428 @@
       "monthlyChurn": 0.06,
       "acquisitionCost": 0
     }
+  ],
+  "adminUsers": [
+    {
+      "id": "user-1",
+      "name": "Ricardo Miller",
+      "email": "admin@barbershop.com",
+      "password": "admin123",
+      "role": "Master Barber & Admin",
+      "avatar": "RM"
+    },
+    {
+      "id": "user-2",
+      "name": "Valeria Gómez",
+      "email": "valeria@barbershop.com",
+      "password": "barber2026",
+      "role": "Operations Manager",
+      "avatar": "VG"
+    }
+  ],
+  "dashboardMetrics": {
+    "dailyRevenue": 1485,
+    "monthlyRevenue": 38420,
+    "occupancyRate": 88,
+    "completedToday": 14,
+    "pendingToday": 6,
+    "totalClients": 1150,
+    "averageTicket": 28.50,
+    "customerSatisfaction": 4.9
+  },
+  "barbers": [
+    {
+      "id": "barber-1",
+      "name": "Marcus Vance",
+      "role": "Master Barber",
+      "phone": "+1 (555) 234-8891",
+      "rating": 4.9,
+      "totalServices": 482,
+      "status": "Disponible",
+      "chair": "Sillón 01",
+      "commissionRate": 0.45
+    },
+    {
+      "id": "barber-2",
+      "name": "Antonio Rossi",
+      "role": "Senior Stylist",
+      "phone": "+1 (555) 345-9922",
+      "rating": 4.85,
+      "totalServices": 395,
+      "status": "Ocupado",
+      "chair": "Sillón 02",
+      "commissionRate": 0.40
+    },
+    {
+      "id": "barber-3",
+      "name": "Julian Drake",
+      "role": "Beard Specialist",
+      "phone": "+1 (555) 456-1133",
+      "rating": 4.95,
+      "totalServices": 410,
+      "status": "Disponible",
+      "chair": "Sillón 03",
+      "commissionRate": 0.40
+    },
+    {
+      "id": "barber-4",
+      "name": "David Silva",
+      "role": "Junior Barber",
+      "phone": "+1 (555) 567-2244",
+      "rating": 4.7,
+      "totalServices": 180,
+      "status": "En descanso",
+      "chair": "Sillón 04",
+      "commissionRate": 0.35
+    }
+  ],
+  "services": [
+    {
+      "id": "haircut",
+      "name": "Classic Precision Haircut",
+      "price": 25,
+      "duration": "45 min",
+      "category": "Corte",
+      "popularity": "Alta",
+      "cost": 5.50
+    },
+    {
+      "id": "beard",
+      "name": "Beard Trim & Sculpting",
+      "price": 18,
+      "duration": "30 min",
+      "category": "Barba",
+      "popularity": "Muy Alta",
+      "cost": 3.00
+    },
+    {
+      "id": "shave",
+      "name": "Royal Hot Towel Shave",
+      "price": 22,
+      "duration": "35 min",
+      "category": "Afeitado",
+      "popularity": "Alta",
+      "cost": 4.20
+    },
+    {
+      "id": "gray-blend",
+      "name": "Gray Blending & Hair Color",
+      "price": 35,
+      "duration": "50 min",
+      "category": "Color",
+      "popularity": "Media",
+      "cost": 8.00
+    },
+    {
+      "id": "scalp-massage",
+      "name": "Scalp Detox & Head Massage",
+      "price": 20,
+      "duration": "25 min",
+      "category": "Tratamiento",
+      "popularity": "Media",
+      "cost": 3.50
+    },
+    {
+      "id": "package",
+      "name": "The Executive Package (VIP)",
+      "price": 55,
+      "duration": "75 min",
+      "category": "Paquete Completo",
+      "popularity": "Muy Alta",
+      "cost": 12.00
+    }
+  ],
+  "appointments": [
+    {
+      "id": "APT-801",
+      "client": "Carlos Mendoza",
+      "phone": "+1 (555) 901-2211",
+      "service": "Classic Precision Haircut",
+      "barber": "Marcus Vance",
+      "date": "2026-11-06",
+      "time": "09:00 AM",
+      "price": 25,
+      "status": "Completada",
+      "paymentMethod": "Tarjeta"
+    },
+    {
+      "id": "APT-802",
+      "client": "Gabriel Solano",
+      "phone": "+1 (555) 812-4433",
+      "service": "The Executive Package (VIP)",
+      "barber": "Antonio Rossi",
+      "date": "2026-11-06",
+      "time": "10:15 AM",
+      "price": 55,
+      "status": "En curso",
+      "paymentMethod": "Efectivo"
+    },
+    {
+      "id": "APT-803",
+      "client": "Rodrigo Fuentes",
+      "phone": "+1 (555) 723-5566",
+      "service": "Beard Trim & Sculpting",
+      "barber": "Julian Drake",
+      "date": "2026-11-06",
+      "time": "11:30 AM",
+      "price": 18,
+      "status": "Confirmada",
+      "paymentMethod": "Tarjeta"
+    },
+    {
+      "id": "APT-804",
+      "client": "Alejandro Vargas",
+      "phone": "+1 (555) 634-7788",
+      "service": "Royal Hot Towel Shave",
+      "barber": "Marcus Vance",
+      "date": "2026-11-06",
+      "time": "01:00 PM",
+      "price": 22,
+      "status": "Confirmada",
+      "paymentMethod": "Transferencia"
+    },
+    {
+      "id": "APT-805",
+      "client": "Esteban Moraga",
+      "phone": "+1 (555) 545-9900",
+      "service": "Classic Precision Haircut",
+      "barber": "David Silva",
+      "date": "2026-11-06",
+      "time": "02:15 PM",
+      "price": 25,
+      "status": "Confirmada",
+      "paymentMethod": "Tarjeta"
+    },
+    {
+      "id": "APT-806",
+      "client": "Javier Brenes",
+      "phone": "+1 (555) 456-1122",
+      "service": "The Executive Package (VIP)",
+      "barber": "Marcus Vance",
+      "date": "2026-11-06",
+      "time": "03:30 PM",
+      "price": 55,
+      "status": "Confirmada",
+      "paymentMethod": "Tarjeta"
+    },
+    {
+      "id": "APT-807",
+      "client": "Mauricio Castro",
+      "phone": "+1 (555) 367-3344",
+      "service": "Beard Trim & Sculpting",
+      "barber": "Julian Drake",
+      "date": "2026-11-06",
+      "time": "04:45 PM",
+      "price": 18,
+      "status": "Cancelada",
+      "paymentMethod": "N/A"
+    },
+    {
+      "id": "APT-808",
+      "client": "Felipe Campos",
+      "phone": "+1 (555) 278-5566",
+      "service": "Classic Precision Haircut",
+      "barber": "Antonio Rossi",
+      "date": "2026-11-06",
+      "time": "06:00 PM",
+      "price": 25,
+      "status": "Confirmada",
+      "paymentMethod": "Efectivo"
+    }
+  ],
+  "clients": [
+    {
+      "id": "CLI-101",
+      "name": "Carlos Mendoza",
+      "phone": "+1 (555) 901-2211",
+      "email": "carlos.m@example.com",
+      "visits": 14,
+      "lastVisit": "2026-11-06",
+      "preferredBarber": "Marcus Vance",
+      "vip": true
+    },
+    {
+      "id": "CLI-102",
+      "name": "Gabriel Solano",
+      "phone": "+1 (555) 812-4433",
+      "email": "g.solano@example.com",
+      "visits": 8,
+      "lastVisit": "2026-11-06",
+      "preferredBarber": "Antonio Rossi",
+      "vip": true
+    },
+    {
+      "id": "CLI-103",
+      "name": "Rodrigo Fuentes",
+      "phone": "+1 (555) 723-5566",
+      "email": "rfuentes@example.com",
+      "visits": 21,
+      "lastVisit": "2026-11-06",
+      "preferredBarber": "Julian Drake",
+      "vip": true
+    },
+    {
+      "id": "CLI-104",
+      "name": "Alejandro Vargas",
+      "phone": "+1 (555) 634-7788",
+      "email": "vargas.ale@example.com",
+      "visits": 5,
+      "lastVisit": "2026-10-24",
+      "preferredBarber": "Marcus Vance",
+      "vip": false
+    },
+    {
+      "id": "CLI-105",
+      "name": "Esteban Moraga",
+      "phone": "+1 (555) 545-9900",
+      "email": "esteban.m@example.com",
+      "visits": 3,
+      "lastVisit": "2026-10-18",
+      "preferredBarber": "David Silva",
+      "vip": false
+    },
+    {
+      "id": "CLI-106",
+      "name": "Javier Brenes",
+      "phone": "+1 (555) 456-1122",
+      "email": "jbrenes@example.com",
+      "visits": 12,
+      "lastVisit": "2026-10-30",
+      "preferredBarber": "Marcus Vance",
+      "vip": true
+    }
+  ],
+  "barbershops": [
+    {
+      "id": "shop-1",
+      "ownerId": "user-1",
+      "ownerName": "Ricardo Miller",
+      "name": "Barber Shop Heritage",
+      "slug": "barber-shop-heritage",
+      "published": true,
+      "publishedAt": "2026-10-30T10:00:00Z",
+      "trialStartedAt": "2026-10-16T00:00:00Z",
+      "trialEndsAt": "2026-10-30T00:00:00Z",
+      "plan": "trial",
+      "fiscalDataSkipped": true,
+      "services": [
+        { "id": "svc-1", "name": "Corte de caballero", "price": 12, "duration": 30, "active": true },
+        { "id": "svc-2", "name": "Barba y perfilado", "price": 10, "duration": 25, "active": true },
+        { "id": "svc-3", "name": "Corte + Barba", "price": 18, "duration": 50, "active": true }
+      ],
+      "weeklySchedule": {
+        "monday":    { "open": "09:00", "close": "19:00", "active": true },
+        "tuesday":   { "open": "09:00", "close": "19:00", "active": true },
+        "wednesday": { "open": "09:00", "close": "19:00", "active": true },
+        "thursday":  { "open": "09:00", "close": "19:00", "active": true },
+        "friday":    { "open": "09:00", "close": "20:00", "active": true },
+        "saturday":  { "open": "09:00", "close": "18:00", "active": true },
+        "sunday":    { "open": "10:00", "close": "16:00", "active": false }
+      },
+      "settings": {
+        "currency": "USD",
+        "timezone": "America/Mexico_City",
+        "whatsapp": "+1 (555) 345-6789",
+        "instagram": "@barbershop_heritage"
+      }
+    }
+  ],
+  "onboardingFunnel": [
+    { "id": "registro", "label": "Registro", "users": 1000, "pct": 100, "simulado": true },
+    { "id": "configuracion", "label": "Configuración rápida", "users": 820, "pct": 82, "simulado": true },
+    { "id": "publicacion", "label": "Página publicada", "users": 710, "pct": 71, "simulado": true },
+    { "id": "compartido", "label": "Enlace compartido", "users": 430, "pct": 43, "simulado": true },
+    { "id": "primeraReserva", "label": "Primera reserva", "users": 220, "pct": 22, "simulado": true },
+    { "id": "pago", "label": "Conversión a pago", "users": 140, "pct": 14, "simulado": true }
+  ],
+  "bookings": [
+    {
+      "id": "BKG-1001",
+      "barbershopId": "shop-2",
+      "barbershopName": "Barbería El Corte",
+      "client": "Simulado · Cliente Demo",
+      "phone": "+1 (555) 010-2030",
+      "service": "Corte de caballero",
+      "price": 12,
+      "date": "2026-11-07",
+      "time": "10:15 AM",
+      "status": "Confirmada",
+      "simulado": true,
+      "createdAt": "2026-11-06T18:42:00Z"
+    },
+    {
+      "id": "BKG-1002",
+      "barbershopId": "shop-3",
+      "barbershopName": "Barbería Moderno",
+      "client": "Simulado · Invitado Web",
+      "phone": "+1 (555) 011-4455",
+      "service": "Corte + Barba",
+      "price": 18,
+      "date": "2026-11-07",
+      "time": "11:30 AM",
+      "status": "Confirmada",
+      "simulado": true,
+      "createdAt": "2026-11-06T19:05:00Z"
+    },
+    {
+      "id": "BKG-1003",
+      "barbershopId": "shop-4",
+      "barbershopName": "Barbería Clásica",
+      "client": "Simulado · Usuario IG",
+      "phone": "+1 (555) 012-9988",
+      "service": "Barba y perfilado",
+      "price": 10,
+      "date": "2026-11-08",
+      "time": "02:00 PM",
+      "status": "Confirmada",
+      "simulado": true,
+      "createdAt": "2026-11-06T19:30:00Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "NTF-2001",
+      "barbershopId": "shop-2",
+      "title": "Nueva reserva recibida",
+      "body": "Simulado · Cliente Demo reservó 'Corte de caballero' para el 07/11 a las 10:15 AM.",
+      "read": false,
+      "simulado": true,
+      "createdAt": "2026-11-06T18:42:00Z"
+    },
+    {
+      "id": "NTF-2002",
+      "barbershopId": "shop-3",
+      "title": "Nueva reserva recibida",
+      "body": "Simulado · Invitado Web reservó 'Corte + Barba' para el 07/11 a las 11:30 AM.",
+      "read": true,
+      "simulado": true,
+      "createdAt": "2026-11-06T19:05:00Z"
+    }
+  ],
+  "sharedLinks": [
+    {
+      "id": "SH-3001",
+      "barbershopId": "shop-2",
+      "channel": "WhatsApp",
+      "clicks": 24,
+      "bookings": 2,
+      "simulado": true
+    },
+    {
+      "id": "SH-3002",
+      "barbershopId": "shop-3",
+      "channel": "Instagram",
+      "clicks": 18,
+      "bookings": 1,
+      "simulado": true
+    },
+    {
+      "id": "SH-3003",
+      "barbershopId": "shop-4",
+      "channel": "WhatsApp",
+      "clicks": 31,
+      "bookings": 3,
+      "simulado": true
+    }
   ]
 }

@@ -12,6 +12,21 @@ import {
   makeUnitEconomics,
 } from './model.js'
 import './App.css'
+import './barber.css'
+import './admin.css'
+import './onboarding.css'
+import BarberHeader from './components/BarberHeader.jsx'
+import BarberHero from './components/BarberHero.jsx'
+import { BarberAbout, BarberServices, BarberBlog, BarberContact } from './components/BarberSections.jsx'
+import BookingModal from './components/BookingModal.jsx'
+import LoginModal from './components/LoginModal.jsx'
+import AdminDashboard from './components/AdminDashboard.jsx'
+import OnboardingWizard from './components/OnboardingWizard.jsx'
+import PublicBookingPage from './components/PublicBookingPage.jsx'
+import AgendoBadge from './components/AgendoBadge.jsx'
+import ValeriaDashboard from './components/ValeriaDashboard.jsx'
+import { translations } from './i18n.js'
+import db from '../db.json'
 
 const currency = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -534,19 +549,72 @@ function downloadCsv(scenarios, ltv24, assumptions) {
 }
 
 function App() {
-  const [theme, setTheme] = useState(
-    () => (localStorage.getItem('agendo-theme') === 'dark' ? 'dark' : 'light'),
-  )
+  const [lang, setLang] = useState(() => localStorage.getItem('barber-lang') || 'en')
   const [investment, setInvestment] = useState(CASE.baseInvestment)
   const [price, setPrice] = useState(CASE.monthlyPrice)
   const [grossMargin, setGrossMargin] = useState(CASE.grossMargin)
   const [churn, setChurn] = useState(CASE.monthlyChurn)
   const [annualShare, setAnnualShare] = useState(0)
+  const [bookingModalOpen, setBookingModalOpen] = useState(false)
+  const [showFinance, setShowFinance] = useState(true)
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const stored = sessionStorage.getItem('barber-admin-user')
+      return stored ? JSON.parse(stored) : null
+    } catch {
+      return null
+    }
+  })
+  const [view, setView] = useState('landing')
+  const [shopConfig, setShopConfig] = useState(null)
+  const [loginModalOpen, setLoginModalOpen] = useState(false)
 
-  function toggleTheme() {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark'
-    localStorage.setItem('agendo-theme', nextTheme)
-    setTheme(nextTheme)
+  const t = translations[lang] || translations.en
+
+  function handleSelectLang(nextLang) {
+    localStorage.setItem('barber-lang', nextLang)
+    setLang(nextLang)
+  }
+
+  function handleLoginSuccess(user) {
+    setCurrentUser(user)
+    try {
+      sessionStorage.setItem('barber-admin-user', JSON.stringify(user))
+    } catch (err) {
+      console.warn('Could not save session', err)
+    }
+    // Role-based entry: Valeria → panel administrativo de onboarding.
+    // Ricardo (y quien ya tiene barbería configurada) → dashboard existente (se preserva).
+    // Cualquier usuario nuevo sin barbería → configuración rápida (onboarding).
+    if (user.role === 'Operations Manager') {
+      setView('valeria')
+    } else {
+      const hasShop = db.barbershops?.some((b) => b.ownerId === user.id)
+      setView(hasShop ? 'dashboard' : 'setup')
+    }
+  }
+
+  function handleSetupFinish(shop) {
+    if (shop) {
+      setShopConfig(shop)
+      setView('public')
+    } else {
+      setView('public')
+    }
+  }
+
+  function handleBookingConfirmed() {
+    // Reserva registrada (SIMULADO). La notificación al barbero se muestra en la página pública.
+  }
+
+  function handleLogout() {
+    setCurrentUser(null)
+    try {
+      sessionStorage.removeItem('barber-admin-user')
+    } catch (err) {
+      console.warn('Could not clear session', err)
+    }
+    setView('landing')
   }
 
   const current = useMemo(
@@ -630,59 +698,130 @@ function App() {
   const heroVerdict =
     history30Economics.blendedRatio >= 2.4 ? 'Escalar con límites' : 'No triplicar todavía'
 
-  return (
-    <main data-theme={theme}>
-      <header className="topbar">
-        <a className="brand" href="#inicio" aria-label="Agendo, ir al inicio">
-          <span className="brand-mark">A</span>
-          <span>AGENDO<span className="brand-sub">CYBER / FINANCE</span></span>
-        </a>
-        <nav className="stage-nav" aria-label="Niveles del reto">
-          <a href="#calculadora"><span>01</span> Calculadora</a>
-          <a href="#tablero"><span>02</span> Tablero <b>+10</b></a>
-          <a href="#simulador"><span>03</span> Simulador <b>+15 / +5</b></a>
-        </nav>
-        <button
-          className="theme-toggle"
-          type="button"
-          aria-label={`Cambiar a tema ${theme === 'dark' ? 'claro' : 'oscuro'}`}
-          aria-pressed={theme === 'dark'}
-          onClick={toggleTheme}
-        >
-          <span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
-          {theme === 'dark' ? 'Claro' : 'Oscuro'}
-        </button>
-        <span className="live-status"><i /> CASO B · ACTIVO</span>
-      </header>
+  if (view === 'dashboard' && currentUser) {
+    return (
+      <AdminDashboard
+        user={currentUser}
+        onLogout={handleLogout}
+        onBackToSite={() => setView('landing')}
+        lang={lang}
+        onSelectLang={handleSelectLang}
+        initialData={db}
+      />
+    )
+  }
 
-      <section className="hero" id="inicio">
-        <div className="hero-copy">
-          <p className="eyebrow"><span className="eyebrow-square" /> DECISIÓN DE INVERSIÓN · HORIZONTE 24 MESES</p>
-          <h1>Crecer sin<br /><em>quebrar la caja.</em></h1>
-          <p className="hero-lede">
-            Valeria quiere triplicar los anuncios. Ricardo quiere saber cuánto aguanta la caja.
-            La respuesta empieza por el costo real de adquirir un cliente.
-          </p>
-          <p className="hero-capital">
-            CAPITAL ÁNGEL <strong>$150.000</strong> <span>→</span> CAJA HOY <strong>{money(CASE.startingCash)}</strong>
-          </p>
-          <a className="primary-link" href="#calculadora">Analizar el caso <span>↓</span></a>
+  if (view === 'valeria' && currentUser) {
+    return (
+      <ValeriaDashboard
+        user={currentUser}
+        onLogout={handleLogout}
+        onBackToSite={() => setView('landing')}
+        lang={lang}
+        onSelectLang={handleSelectLang}
+      />
+    )
+  }
+
+  if (view === 'setup' && currentUser) {
+    return (
+      <div className="page-wrap">
+        <OnboardingWizard onFinish={handleSetupFinish} lang={lang} user={currentUser} />
+      </div>
+    )
+  }
+
+  if (view === 'public' && shopConfig) {
+    return (
+      <div className="page-wrap">
+        <PublicBookingPage
+          shop={shopConfig}
+          t={t}
+          lang={lang}
+          onBookingConfirmed={handleBookingConfirmed}
+        />
+        <div className="public-badge-footer">
+          <AgendoBadge
+            t={t.badge}
+            lang={lang}
+            onRegister={() => {
+              setShopConfig(null)
+              setView('setup')
+            }}
+          />
         </div>
-        <aside className="hero-verdict">
-          <span className="verdict-label">LECTURA DEL CASO</span>
-          <strong>{heroVerdict}</strong>
-          <p>
-            A $30.000, el historial predice {number.format(history30.trials)} trials, no 1.500.
-            Su CAC blended es {money(history30Economics.blendedCAC, true)}.
-          </p>
-          <div className="verdict-stats">
-            <span><b>{ratio(history30Economics.blendedRatio)}</b>LTV:CAC blended</span>
-            <span><b>{tripledBreakMonth ? `M${tripledBreakMonth}` : '24 m'}</b>primer cruce del piso*</span>
+      </div>
+    )
+  }
+
+  return (
+    <main data-theme="dark">
+      <BarberHeader
+        onOpenBooking={() => setBookingModalOpen(true)}
+        lang={lang}
+        onSelectLang={handleSelectLang}
+        t={t.nav}
+        currentUser={currentUser}
+        onOpenLogin={() => setLoginModalOpen(true)}
+        onOpenDashboard={() => setView('dashboard')}
+      />
+      <BarberHero
+        onOpenBooking={() => setBookingModalOpen(true)}
+        t={t.hero}
+      />
+      <BarberAbout t={t.about} />
+      <BarberServices
+        onOpenBooking={() => setBookingModalOpen(true)}
+        t={t.services}
+      />
+
+      {/* AGENDO CYBER SAAS & FINANCIAL DECISION ENGINE (CASO B) */}
+      <section className="barber-finance-suite" id="finance">
+        <div className="finance-suite-banner">
+          <div className="finance-suite-info">
+            <span className="barber-section-eyebrow">{t.finance.eyebrow}</span>
+            <h3>{t.finance.title}</h3>
+            <p>{t.finance.desc}</p>
           </div>
-          <small>*Sin corregir el gasto. El simulador protege el piso.</small>
-        </aside>
-        <div className="hero-index">ANÁLISIS 01—03 <span>UNIT ECONOMICS / SAAS</span></div>
-      </section>
+          <button
+            type="button"
+            className="finance-toggle-btn"
+            onClick={() => setShowFinance(!showFinance)}
+          >
+            {showFinance ? t.finance.hideBtn : t.finance.showBtn}
+          </button>
+        </div>
+
+        {showFinance && (
+          <div className="finance-content-wrapper">
+            <section className="hero" id="agendo-caso-b">
+              <div className="hero-copy">
+                <p className="eyebrow"><span className="eyebrow-square" /> DECISIÓN DE INVERSIÓN · HORIZONTE 24 MESES</p>
+                <h1>Crecer sin<br /><em>quebrar la caja.</em></h1>
+                <p className="hero-lede">
+                  Valeria quiere triplicar los anuncios. Ricardo quiere saber cuánto aguanta la caja.
+                  La respuesta empieza por el costo real de adquirir un cliente.
+                </p>
+                <p className="hero-capital">
+                  CAPITAL ÁNGEL <strong>$150.000</strong> <span>→</span> CAJA HOY <strong>{money(CASE.startingCash)}</strong>
+                </p>
+                <a className="primary-link" href="#calculadora">Analizar el caso <span>↓</span></a>
+              </div>
+              <aside className="hero-verdict">
+                <span className="verdict-label">LECTURA DEL CASO</span>
+                <strong>{heroVerdict}</strong>
+                <p>
+                  A $30.000, el historial predice {number.format(history30.trials)} trials, no 1.500.
+                  Su CAC blended es {money(history30Economics.blendedCAC, true)}.
+                </p>
+                <div className="verdict-stats">
+                  <span><b>{ratio(history30Economics.blendedRatio)}</b>LTV:CAC blended</span>
+                  <span><b>{tripledBreakMonth ? `M${tripledBreakMonth}` : '24 m'}</b>primer cruce del piso*</span>
+                </div>
+                <small>*Sin corregir el gasto. El simulador protege el piso.</small>
+              </aside>
+              <div className="hero-index">ANÁLISIS 01—03 <span>UNIT ECONOMICS / SAAS</span></div>
+            </section>
 
       <section className="section calculator-section" aria-labelledby="calculadora">
         <SectionHeading
@@ -1030,12 +1169,23 @@ function App() {
 
         <Assumptions />
       </section>
+    </div>
+  )}
+</section>
 
-      <footer className="footer">
-        <a className="brand" href="#inicio"><span className="brand-mark">A</span><span>AGENDO<span className="brand-sub">CYBER / FINANCE</span></span></a>
-        <span>MODELO DE DECISIÓN · CASO B · USD NOMINALES</span>
-        <a href="#inicio">VOLVER ARRIBA ↑</a>
-      </footer>
+      <BarberBlog t={t.blog} />
+      <BarberContact t={t.contact} />
+      <BookingModal
+        isOpen={bookingModalOpen}
+        onClose={() => setBookingModalOpen(false)}
+        t={t.modal}
+      />
+      <LoginModal
+        isOpen={loginModalOpen}
+        onClose={() => setLoginModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
+        lang={lang}
+      />
     </main>
   )
 }
